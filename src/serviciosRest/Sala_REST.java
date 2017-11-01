@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import entidades.Sala;
+import login.Secured;
 import servicios.DAOSala;
 import serviciosRest.Mensajes;
 
@@ -24,7 +25,7 @@ public class Sala_REST {
 	
 	// TODAS LAS SALAS
 	@GET
-	//@Secured
+	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Sala> getSalas() {
 		return DAOSala.getInstance().getSalas();
@@ -32,7 +33,7 @@ public class Sala_REST {
 
 	// CREAR UNA SALA
 	@POST
-	//@Secured
+	@Secured
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response crearSala(Sala sala) {
@@ -40,14 +41,16 @@ public class Sala_REST {
 		if(nw!=null) {
 			return Response.status(201).entity(nw).build();
 		}
-		throw new Mensajes(nw.getId());
+		throw  new Mensajes(1,1);
+		/// 1 RecursoNoCreado , 2 RecursoNoEncontrado , 3 RecursoNoExiste
+
 	}
 		
 
 	// TRAE A UNA SALA EN BASE A SU ID
 
 	@GET
-	//@Secured
+	@Secured
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Sala getSala(@PathParam("id") String id) {
@@ -56,35 +59,45 @@ public class Sala_REST {
 		if(sala!=null)
 			return sala;
 		else
-			throw new Mensajes(idSala);
+			throw new Mensajes(2,idSala);
+		/// 1 RecursoNoCreado , 2 RecursoNoEncontrado , 3 RecursoNoExiste
+
 	}
 
 	// MODIFICA A UNA SALA EN BASE A SU ID
 
 		@PUT
-		//@Secured
+		@Secured
 		@Path("/{id}")
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
-		public Response updateSala(@PathParam("id") int id,Sala sala) {
-			Sala result = DAOSala.getInstance().updateSala(id, sala.getNombre(),sala.getDireccion());
-			if(result!=null) return Response.status(201).entity(result).build();
-			throw new Mensajes(id);
+		public Response updateSala(@PathParam("id") String id,Sala sala) {
+			int idSala = Integer.valueOf(id);
+			Sala result = DAOSala.getInstance().updateSala(idSala, sala.getNombre(),sala.getDireccion());
+			if(result!=null) { 
+				return Response.status(201).entity(result).build();
+			}
+			throw new Mensajes(2,idSala);
+			/// 1 RecursoNoCreado , 2 RecursoNoEncontrado , 3 RecursoNoExiste
+
 		}
 		
 		// BORRA A UNA SALA EN BASE A SU ID
 
 		@DELETE
-		//@Secured
+		@Secured
 		@Path("/{id}")
 		@Produces(MediaType.APPLICATION_JSON)
-		public Response deleteSala(@PathParam("id") int id) {
-		boolean resultado= DAOSala.getInstance().deleteSala(id);
+		public Response deleteSala(@PathParam("id") String id) {
+		int idSala = Integer.valueOf(id);
+		boolean resultado= DAOSala.getInstance().deleteSala(idSala);
 		if(resultado) {
 			return Response.status(201).build();
 		} 
 		else {
-			throw new Mensajes(id);
+			throw new Mensajes(3,idSala);
+			/// 1 RecursoNoCreado , 2 RecursoNoEncontrado , 3 RecursoNoExiste
+
 		}	
 		}
 		

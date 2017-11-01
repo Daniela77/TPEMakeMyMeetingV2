@@ -10,17 +10,17 @@ public class TokenHelper {
 	static Hashtable<String,String> tokens = new Hashtable<String,String>();
 	
 	/**
-	 * Genera un token al usuario que corresponde a un cierto email
-	 * @param email Email del usuario
+	 * Genera un token al usuario que corresponde a un cierto userName
+	 * @param userName del usuario
 	 * @return token de autentificacion
 	 */
-	public static String generarToken(String email){
+	public static String generarToken(String userName){
 		long minutes = System.currentTimeMillis() / 1000 / 60;
 		String key = UUID.randomUUID().toString().toUpperCase() +
-				"|" + email +
+				"|" + userName +
 				"|" + minutes;
 	StandardPBEStringEncryptor jasypt = new StandardPBEStringEncryptor();
-		jasypt.setPassword(email);
+		jasypt.setPassword(userName);
 		String authenticationToken = jasypt.encrypt(key);
 		return authenticationToken;
 	}
@@ -28,10 +28,10 @@ public class TokenHelper {
 	/**
 	 * Setea el nuevo token en la hash que contiene los tokens de usuarios
 	 * @param token Token a setear
-	 * @param email Email del usuario dueño del token
+	 * @param userName del usuario dueño del token
 	 */
-	public static void setToken(String token, String email){
-		tokens.put(token,email);
+	public static void setToken(String token, String userName){
+		tokens.put(token,userName);
 	}
 
 	/**

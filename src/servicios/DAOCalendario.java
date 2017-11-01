@@ -27,9 +27,9 @@ public class DAOCalendario {
 			String jpql = "SELECT c FROM Calendario c"; 
 		    Query query = em.createQuery(jpql); 
 		    List<Calendario> resultados = query.getResultList();
+		    System.out.println("calendarios"+resultados);
 		    em.close();
 		    return resultados;
-		    
 		}
 
 	public  Calendario crearCalendario(String nombre, Usuario usuario) {
@@ -39,6 +39,7 @@ public class DAOCalendario {
 		em.persist(nc);
 		em.getTransaction().commit();
 		em.close();
+		 System.out.println("calend"+nc);
 		return nc;
 	}
 	
@@ -48,7 +49,7 @@ public class DAOCalendario {
 		Query query = em.createQuery(jpql); 
 		query.setParameter(1, idCalendario);
 		Calendario calen = (Calendario) query.getSingleResult();
-		//System.out.println(calen.toString());
+		System.out.println(calen.toString());
 		return calen;
 		
 

@@ -3,7 +3,9 @@ package login;
 import java.io.Serializable;
 
 public class Credencial implements Serializable {
-    private String username;
+
+	private static final long serialVersionUID = 4759607722724330633L;
+	private String username;
     private String password;
     
     

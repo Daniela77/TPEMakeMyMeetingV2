@@ -38,16 +38,7 @@ private static DAOUsuario daousuario;
 	    return resultados;
 	    
 	}
-	
-//   Version con el EntityManager desde fuera 	
-	
-//	public static Usuario getUsuario(int idUsuario,EntityManager em) {
-//		String jpql = "Select u From Usuario u where u.id =?1";
-//		Query query = em.createQuery(jpql); 
-//		query.setParameter(1, idUsuario);
-//		return (Usuario) query.getSingleResult();
-//	}
-//	
+
 	
 	public  Usuario getUsuario(int idUsuario) {
 		EntityManager em=EMF.createEntityManager();
@@ -106,4 +97,22 @@ private static DAOUsuario daousuario;
 		return (Usuario) query.getSingleResult();
 	}
 	
+	
+
+	/// TIEMPO LIBRE PARA AGREGAR UNA NUEVA ACTIVIDAD
+		public  boolean tiempoLibreUsuario(int usuario, Date fechaInicio, Date fechafin) {
+			// Optimizar para los usuarios invitados
+			EntityManager em=EMF.createEntityManager();	
+			String jpql = "SELECT a1 FROM Actividad a1"
+					+ "WHERE a.duenio_idUsuario = ?1"
+					+ " AND (a1.fechaInicio < ?2" + " AND ?2 < a1.fechaFin"
+					+ " OR a1.fechaInicio <= ?3" + " AND ?3 <= a1.fechaInicio)";
+			Query query = em.createQuery(jpql); 
+			query.setParameter(1, usuario);
+			query.setParameter(2, fechaInicio);
+			query.setParameter(3, fechafin);
+			List<Actividad> resultados = query.getResultList();
+			em.close();
+			return (resultados == null);
+		}
 }

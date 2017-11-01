@@ -15,41 +15,45 @@ import javax.ws.rs.core.Response;
 
 import entidades.Calendario;
 import entidades.Usuario;
+import login.Secured;
 import servicios.DAOCalendario;
 import servicios.DAOUsuario;
+
+import serviciosRest.Obj_Calendario;
 import serviciosRest.Mensajes;
 
-@Path("/Calendarios")
+@Path("/calendarios")
 public class Calendario_REST {
 	
 	// TODOS LOS CalendarioS
 	@GET
-	//@Secured
+	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Calendario> getCalendario() {
+	public List<Calendario> getCalendarios() {
 		return DAOCalendario.getInstance().getCalendarios();
 	}
 
 	 // CREAR UN Calendario
-	@SuppressWarnings("null")
 	@POST
-	//@Secured
+	@Secured
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response crearCalendario(Calendario calendario) {
-	Usuario duenio = DAOUsuario.getInstance().getUsuario(calendario.getDuenio().getId());	
+	public Response crearCalendario(Obj_Calendario calendario) {	
+	Usuario duenio = DAOUsuario.getInstance().getUsuario(calendario.getDuenio());	
 	Calendario nw = DAOCalendario.getInstance().crearCalendario(calendario.getNombre(),duenio);
 	if(nw!=null) {
 		return Response.status(201).entity(nw).build();
 	}
-	throw new Mensajes(nw.getId());
+	throw new Mensajes(1,nw.getId()); 	    	 
+	/// 1 RecursoNoCreado , 2 RecursoNoEncontrado , 3 RecursoNoExiste
+
 
 	}
 	
 	
 	// TRAE A UN Calendario EN BASE A SU ID
 	@GET
-	//@Secured
+	@Secured
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Calendario getCalendario(@PathParam("id") String id) {
@@ -58,35 +62,42 @@ public class Calendario_REST {
 	 	if(Calendario!=null)
 			return Calendario;
 		else
-			throw new Mensajes(idCalendario);
+			throw new Mensajes(2,idCalendario); 	    	 
+		/// 1 RecursoNoCreado , 2 RecursoNoEncontrado , 3 RecursoNoExiste 
 	}
 	
 	// MODIFICA A UN Calendario EN BASE A SU ID
 
 	@PUT
-	//@Secured
+	@Secured
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateCalendario(@PathParam("id") int id,Calendario Calendario) {
-		Calendario result = DAOCalendario.getInstance().updateCalendario(id, Calendario.getNombre(),Calendario.getDuenio().getId());
-		if(result!=null) return Response.status(201).entity(result).build();
-		throw new Mensajes(id);
+	public Response updateCalendario(@PathParam("id") String id,Obj_Calendario Calendario) {
+		int idCalendario = Integer.valueOf(id);
+		Calendario result = DAOCalendario.getInstance().updateCalendario(idCalendario, Calendario.getNombre(),Calendario.getDuenio());
+		if(result!=null) {
+			return Response.status(201).entity(result).build();}
+		throw new Mensajes(2,idCalendario); 	    	 
+		/// 1 RecursoNoCreado , 2 RecursoNoEncontrado , 3 RecursoNoExiste 
+
 	}
 	
 	// BORRA A UN Calendario EN BASE A SU ID
 
 	@DELETE
-	//@Secured
+	@Secured
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCalendario(@PathParam("id") int id) {
+	int idCalendario = Integer.valueOf(id);
 	boolean resultado= DAOCalendario.getInstance().deleteCalendario(id);
 	if(resultado) {
 		return Response.status(201).build();
 	} 
 	else {
-		throw new Mensajes(id);
+		throw new Mensajes(3,idCalendario);
+		/// 1 RecursoNoCreado , 2 RecursoNoEncontrado , 3 RecursoNoExiste 
 	}	
 	}
 	

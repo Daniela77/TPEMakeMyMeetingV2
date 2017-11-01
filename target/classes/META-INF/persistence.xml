@@ -10,6 +10,7 @@
       <class>entidades.Calendario</class> <!-- <mapping-file>\META-INF\mapping.xml</class> -->
       <class>entidades.Sala</class> <!-- <mapping-file>\META-INF\mapping.xml</class> -->
       <class>entidades.Usuario</class> <!-- <mapping-file>\META-INF\mapping.xml</class> -->
+      <class>entidades.Invitacion</class> <!-- <mapping-file>\META-INF\mapping.xml</class> -->
       <properties>
       					
 		<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

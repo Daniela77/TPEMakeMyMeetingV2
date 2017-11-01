@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import entidades.Usuario;
+import login.Secured;
 import servicios.DAOUsuario;
 import serviciosRest.Mensajes;
 
@@ -22,31 +23,32 @@ public class Usuario_REST {
 	
 	// TODOS LOS USUARIOS
 	@GET
-	//@Secured
+	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Usuario> getUsuario() {
-		System.out.println("Llamando");
+	public List<Usuario> getUsuarios() {
 		return DAOUsuario.getInstance().getUsuarios();
 	}
 
 	 // CREAR UN USUARIO
 	@POST
-	//@Secured
+	@Secured
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response crearusuario(Usuario usuario) {
+	public Response crearUsuario(Usuario usuario) {
 	Usuario nw = DAOUsuario.getInstance().crearUsuario(usuario.getNombre(),usuario.getApellido(),usuario.getUserName(),usuario.getPassword());
 	if(nw!=null) {
 		return Response.status(201).entity(nw).build();
 	}
-	throw new Mensajes(nw.getId());
+	throw new Mensajes(1,1);
+	 /// 1 RecursoNoCreado , 2 RecursoNoEncontrado , 3 RecursoNoExiste 
+
 
 	}
 	
 	
 	// TRAE A UN USUARIO EN BASE A SU ID
 	@GET
-	//@Secured
+	@Secured
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Usuario getUsuario(@PathParam("id") String id) {
@@ -55,45 +57,47 @@ public class Usuario_REST {
 	 	if(usuario!=null)
 			return usuario;
 		else
-			throw new Mensajes(idusuario);
+			throw new Mensajes(2,idusuario);
+   	 /// 1 RecursoNoCreado , 2 RecursoNoEncontrado , 3 RecursoNoExiste 
+
 	}
 	
 	// MODIFICA A UN USUARIO EN BASE A SU ID
 
 	@PUT
-	//@Secured
+	@Secured
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateUsuario(@PathParam("id") int id,Usuario usuario) {
-		Usuario result = DAOUsuario.getInstance().updateUsuario(id, usuario.getNombre(),usuario.getApellido());
-		if(result!=null) return Response.status(201).entity(result).build();
-		throw new Mensajes(id);
+	public Response updateUsuario(@PathParam("id") String id,Usuario usuario) {
+	 	int idusuario = Integer.valueOf(id);
+		Usuario result = DAOUsuario.getInstance().updateUsuario(idusuario, usuario.getNombre(),usuario.getApellido());
+		if(result!=null) {
+			return Response.status(201).entity(result).build();
+		}
+		throw new Mensajes(2,idusuario);
+	   	 /// 1 RecursoNoCreado , 2 RecursoNoEncontrado , 3 RecursoNoExiste 
 	}
 	
 	// BORRA A UN USUARIO EN BASE A SU ID
 
 	@DELETE
-	//@Secured
+	@Secured
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteUsuario(@PathParam("id") int id) {
-	boolean resultado= DAOUsuario.getInstance().deleteUsuario(id);
+	public Response deleteUsuario(@PathParam("id") String id) {
+	 	int idusuario = Integer.valueOf(id);
+
+	boolean resultado= DAOUsuario.getInstance().deleteUsuario(idusuario);
 	if(resultado) {
 		return Response.status(201).build();
 	} 
 	else {
-		throw new Mensajes(id);
+		throw new Mensajes(3,idusuario);
+	   	 /// 1 RecursoNoCreado , 2 RecursoNoEncontrado , 3 RecursoNoExiste 
 	}	
 	}
-	
-	
-	////////
-	////////   	Hacer el GET para el login
-	////////
-	////////
-	
-	
+
 
 }
 	
