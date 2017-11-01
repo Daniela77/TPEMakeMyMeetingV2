@@ -41,7 +41,7 @@ public class Actividad_REST {
 	@GET
 	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Actividad> getActividad() {
+	public List<Actividad> getActividades() {
 		return DAOActividad.getInstance().getActividades();
 	}
 

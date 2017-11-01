@@ -22,9 +22,9 @@ public class DBConf implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		System.out.println(sce.getServletContext().getContextPath());
-		System.out.println(sce.getServletContext().getServletContextName());
-		System.out.println(sce.getServletContext().toString());
+//		System.out.println(sce.getServletContext().getContextPath());
+//		System.out.println(sce.getServletContext().getServletContextName());
+//		System.out.println(sce.getServletContext().toString());
 		EMF.initFactory();
 	}
 

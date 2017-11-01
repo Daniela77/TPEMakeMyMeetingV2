@@ -31,7 +31,7 @@ public class Test_Calendario {
 		token = getToken();
 		crearCalendarios();
 		getCalendario();
-		listarCalendarios();
+		getCalendarios();
 //		updateCalendario();
 //		deleteCalendario();
 	}
@@ -142,7 +142,7 @@ public class Test_Calendario {
 
 	}
 
-	public void listarCalendarios() throws ClientProtocolException, IOException {
+	public void  getCalendarios() throws ClientProtocolException, IOException {
 
 		String url = BASE_URL + "/calendarios";
 
