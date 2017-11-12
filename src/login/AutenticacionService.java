@@ -12,11 +12,13 @@ import servicios.DAOUsuario;
 
 @Path("/autenticacion")
 public class AutenticacionService {
+	
 	@POST
     @Produces("application/json")
     @Consumes("application/json")
-	
 	public Response autenticarUser(Credencial credentials) {
+		
+		System.out.println("autenticarUser");
 
         String username = credentials.getUsername();
         String password = credentials.getPassword();
@@ -29,6 +31,7 @@ public class AutenticacionService {
             return Response.ok(token).build();
 
         } catch (Exception e) {
+        	e.printStackTrace();
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }    	  
 	}

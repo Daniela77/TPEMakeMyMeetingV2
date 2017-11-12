@@ -45,8 +45,9 @@ private static DAOUsuario daousuario;
 		String jpql = "Select u From Usuario u where u.idUsuario =?1";
 		Query query = em.createQuery(jpql); 
 		query.setParameter(1, idUsuario);
+		Usuario usuariotemp = (Usuario) query.getSingleResult();
 		em.close();
-		return (Usuario) query.getSingleResult();
+		return usuariotemp;
 	}
 	
 
@@ -89,12 +90,13 @@ private static DAOUsuario daousuario;
 	
 	public Usuario login(Usuario usuario) {
 		EntityManager em=EMF.createEntityManager();
-		String jpql = "Select u From Usuario u where u.userName =?1 && u.password =?2 ";
+		String jpql = "Select u from Usuario u where u.userName =?1 and u.password =?2 ";
 		Query query = em.createQuery(jpql); 
 		query.setParameter(1, usuario.getUserName());
 		query.setParameter(2, usuario.getPassword());
+		Usuario usuarioAux=(Usuario) query.getSingleResult();
 		em.close();
-		return (Usuario) query.getSingleResult();
+		return usuarioAux;
 	}
 	
 	

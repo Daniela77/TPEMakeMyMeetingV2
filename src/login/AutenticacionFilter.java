@@ -17,7 +17,8 @@ import javax.ws.rs.core.HttpHeaders;
 public class AutenticacionFilter implements ContainerRequestFilter {
    public void filter(ContainerRequestContext ctx) throws IOException {
       String authHeader = ctx.getHeaderString(HttpHeaders.AUTHORIZATION);
-      if (authHeader == null) throw new NotAuthorizedException("Bearer");
+      if (authHeader == null) 
+    	  throw new NotAuthorizedException("Bearer");
       String token = parseToken(authHeader);
       if (verifyToken(token) == false) {
          throw new NotAuthorizedException("Bearer error=\"invalid_token\"");
@@ -26,7 +27,7 @@ public class AutenticacionFilter implements ContainerRequestFilter {
    }
 
    private String parseToken(String header) {
-	   String token = header.substring("Bearer".length()).trim();
+	   String token = header.substring("Bearer-".length()).trim();
 	   return token;
    }
    private boolean verifyToken(String token) {

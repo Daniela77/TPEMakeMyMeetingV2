@@ -31,7 +31,6 @@ public class Usuario_REST {
 
 	 // CREAR UN USUARIO
 	@POST
-	@Secured
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response crearUsuario(Usuario usuario) {

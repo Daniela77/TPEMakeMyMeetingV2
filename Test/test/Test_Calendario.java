@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Test_Calendario {
 	
-	public final String BASE_URL="http://localhost:8080/TPEMakeMyMeeting";
+	public final String BASE_URL="http://localhost:8080/TPEMakeMyMeeting/api";
 
 	public final HttpClient client = HttpClientBuilder.create().build();
 	String token;

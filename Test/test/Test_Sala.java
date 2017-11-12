@@ -11,7 +11,7 @@ import com.sun.jersey.api.client.WebResource;
 
 public class Test_Sala {
 
-	public final String BASE_URL="http://localhost:8080/MakeMyMeeting";
+	public final String BASE_URL="http://localhost:8080/TPEMakeMyMeeting/api";
 
 	public Client client = Client.create();
 

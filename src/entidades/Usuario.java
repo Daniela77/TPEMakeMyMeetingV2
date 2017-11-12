@@ -35,7 +35,7 @@ public class Usuario /*implements Serializable*/ {
 	private List<Invitacion> listInvitaciones;
 	// Actividad
 	@ManyToMany (mappedBy ="invitados", cascade=CascadeType.PERSIST)
-	private List<Actividad >actividadesInvitado;
+	private List<Actividad> actividadesInvitado;
 	
 	public Usuario() {
 	}
