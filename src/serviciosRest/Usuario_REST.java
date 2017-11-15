@@ -23,7 +23,7 @@ public class Usuario_REST {
 	
 	// TODOS LOS USUARIOS
 	@GET
-	@Secured
+	//@Secured
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Usuario> getUsuarios() {
 		return DAOUsuario.getInstance().getUsuarios();
@@ -47,7 +47,7 @@ public class Usuario_REST {
 	
 	// TRAE A UN USUARIO EN BASE A SU ID
 	@GET
-	@Secured
+	//@Secured
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Usuario getUsuario(@PathParam("id") String id) {

@@ -13,12 +13,16 @@ public class Obj_Actividad {
 			private int lugar;
 			private int calendario;
 			@JsonCreator
+			
 			public Obj_Actividad(@JsonProperty("nombre")String nombre, @JsonProperty("duenio") int id_duenio,
 								 @JsonProperty("fechaInicio")String fechai, @JsonProperty("fechaFin") String fechaf,
 								 @JsonProperty("lugar")int sala, @JsonProperty("calendario") int calendario) {
 				this.nombre = nombre;
+				System.out.println("holaaaaaaaaaaaaaaaa");
+				
 				this.duenio = id_duenio;
 				this.fechaInicio = fechai;
+				System.out.println(this.fechaInicio);
 				this.fechaFin = fechaf;
 				this.lugar = sala;
 				this.calendario = calendario;

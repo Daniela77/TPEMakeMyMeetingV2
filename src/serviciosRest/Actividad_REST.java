@@ -39,7 +39,7 @@ public class Actividad_REST {
 
 	// TODOS LAS ACTIVIDADES
 	@GET
-	@Secured
+//	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Actividad> getActividades() {
 		return DAOActividad.getInstance().getActividades();
@@ -50,16 +50,18 @@ public class Actividad_REST {
 
 	 // CREAR UNA Actividad
 	@POST
-	@Secured
+//	@Secured
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response crearActividad(Obj_Actividad actividad) {
+		System.out.println("actividad:"+actividad);
 	final Date fechaInicio;
 	final Date fechaFin;
 	try {
 		  fechaInicio =  formatoFecha.parse(actividad.getFechaInicio()); 
 		  fechaFin =  formatoFecha.parse(actividad.getFechaFin());
 	      Usuario duenio = DAOUsuario.getInstance().getUsuario(actividad.getDuenio());
+	      System.out.println("usuario:"+duenio.getNombre());
 		  Calendario calendario = DAOCalendario.getInstance().getCalendario(actividad.getCalendario());
 		  Sala sala = DAOSala.getInstance().getSala(actividad.getLugar());
 		  Actividad nw = DAOActividad.getInstance().crearActividad(actividad.getNombre(),calendario.getId(),duenio.getId(),fechaInicio,fechaFin,sala);
@@ -79,7 +81,7 @@ public class Actividad_REST {
 	
 	// TRAE A UN Actividad EN BASE A SU ID
 	@GET
-	@Secured
+//	@Secured
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Actividad getActividad(@PathParam("id") String id) {

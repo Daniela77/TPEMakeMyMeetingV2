@@ -19,7 +19,7 @@ public class Test_Usuario {
 	public void test() {
 		testCrearUsuario();
 		testGetUsuario();
-		//testGetUsuarios();
+		testGetUsuarios();
 	}
 
 	public String getToken() {
@@ -65,38 +65,38 @@ public class Test_Usuario {
 		System.out.println("Response Content : " + response.getEntity(String.class));
 		Assert.assertEquals(response.getStatus(), 201);
 
-		// jsonObject = mapper.createObjectNode();
-		// jsonObject.put("nombre","laggis");
-		// jsonObject.put("apellido","gomez");
-		// jsonObject.put("userName","laggis");
-		// jsonObject.put("password","laggis1");
-		// jsonString = jsonObject.toString();
-		//
-		// webResource = client.resource(url);
-		// response = webResource.type("application/json").post(ClientResponse.class,
-		// jsonString);
-		//
-		// System.out.println("\nPOST "+url);
-		// System.out.println("Response Code : " + response.getStatus());
-		// System.out.println("Response Content : " + response.getEntity(String.class));
-		// Assert.assertEquals(response.getStatus(), 201);
-		//
-		// jsonObject = mapper.createObjectNode();
-		// jsonObject.put("nombre","laggis");
-		// jsonObject.put("apellido","gomez");
-		// jsonObject.put("userName","laggis");
-		// jsonObject.put("password","laggis1");
-		// jsonString = jsonObject.toString();
-		//
-		// webResource = client.resource(url);
-		// response = webResource.type("application/json").post(ClientResponse.class,
-		// jsonString);
-		//
-		// System.out.println("\nPOST "+url);
-		// System.out.println("Response Code : " + response.getStatus());
-		// System.out.println("Response Content : " + response.getEntity(String.class));
-		// Assert.assertEquals(response.getStatus(), 201);
-		//
+		 jsonObject = mapper.createObjectNode();
+		 jsonObject.put("nombre","winston");
+		 jsonObject.put("apellido","perez");
+		 jsonObject.put("userName","winston");
+		 jsonObject.put("password","winston1");
+		 jsonString = jsonObject.toString();
+		
+		 webResource = client.resource(url);
+		 response = webResource.type("application/json").post(ClientResponse.class,
+		 jsonString);
+		
+		 System.out.println("\nPOST "+url);
+		 System.out.println("Response Code : " + response.getStatus());
+		 System.out.println("Response Content : " + response.getEntity(String.class));
+		 Assert.assertEquals(response.getStatus(), 201);
+		
+		 jsonObject = mapper.createObjectNode();
+		 jsonObject.put("nombre","pascual");
+		 jsonObject.put("apellido","gutierrez");
+		 jsonObject.put("userName","pascual");
+		 jsonObject.put("password","pascual1");
+		 jsonString = jsonObject.toString();
+		
+		 webResource = client.resource(url);
+		 response = webResource.type("application/json").post(ClientResponse.class,
+		 jsonString);
+		
+		 System.out.println("\nPOST "+url);
+		 System.out.println("Response Code : " + response.getStatus());
+		 System.out.println("Response Content : " + response.getEntity(String.class));
+		 Assert.assertEquals(response.getStatus(), 201);
+		
 		// jsonObject = mapper.createObjectNode();
 		// jsonObject.put("nombre","laggis");
 		// jsonObject.put("apellido","gomez");
@@ -211,7 +211,7 @@ public class Test_Usuario {
 
 	}
 
-	// @Test(dependsOnMethods= {"testCrearUsuarios"})
+	// @Test
 	public void testGetUsuario() {
 
 		String token = getToken();
@@ -226,9 +226,8 @@ public class Test_Usuario {
 
 	}
 
-	// @Test(dependsOnMethods= {"testCrearUsuarios"})
+	// @Test
 	public void testGetUsuarios() {
-
 		String token = getToken();
 		String url = BASE_URL + "/usuarios";
 		WebResource webResource = client.resource(url);
@@ -241,7 +240,7 @@ public class Test_Usuario {
 
 	}
 
-	// @Test(dependsOnMethods= {"testCrearUsuarios"})
+	// @Test
 	// public void testUpdateUsuario() {
 	//
 	//

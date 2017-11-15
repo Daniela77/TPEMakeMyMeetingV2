@@ -25,7 +25,7 @@ public class Actividad /*implements Serializable*/ {
 	private int id;
 	//@Column(nullable=false)
 	private String nombre;
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne
 	private Usuario duenio;
 	//@Temporal(TemporalType.DATE)
 	private Date fechaInicio;
@@ -35,13 +35,13 @@ public class Actividad /*implements Serializable*/ {
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Sala lugar;
 	
-	@ManyToMany(cascade=CascadeType.PERSIST)
+	@ManyToMany
 	private List<Usuario> invitados;
 	
 	// se saco la idea de usuarios pendientes y que solo quede todo en invitados
 	//@ManyToOne -    porque un usuario puede tener muchos calendarios y un calendario muchos usuarios
 	
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne
 	private Calendario calendario;
 		
 	public Actividad() {}
@@ -52,7 +52,7 @@ public class Actividad /*implements Serializable*/ {
 		this.fechaInicio =  fechaInicio;
 		this.fechaFin =  fechaFin;
 		this.lugar = null; // el lugar se lo agrega despues
-		this.invitados = new ArrayList<Usuario>();
+//		this.invitados = new ArrayList<Usuario>();
 		this.calendario = c;
 //		this.pendientes = new ArrayList<Usuario>();
 	}
@@ -110,22 +110,22 @@ public class Actividad /*implements Serializable*/ {
 		return lugar;
 	}
 
-	public void setLugar(Sala lugar) {
-		if (lugar.hayLugar(this)) {
-			this.lugar = lugar;
-			this.lugar.setActividad(this);
-		}
+//	public void setLugar(Sala lugar) {
+//		if (lugar.hayLugar(this)) {
+//			this.lugar = lugar;
+//			this.lugar.setActividad(this);
+//		}
 		//mmdy: habria que ver como indicar en caso de no poder ponerlo en esa sala 
-	}
+//	}
 	
 	////////////////////////////////////////////////
 
-    public void setInvitado(Usuario usuario) {
-   	 this.invitados.add(usuario);
-   	 // creamos una invitacion para hace rla asociacion entre usuario y actividad
-   	 // V 2.0 del tpe / antes se hacia todo en actividad pero se le quito esta responsabilidad
-   	 usuario.setInvitacion(new Invitacion(this, usuario));
-   }	
+//    public void setInvitado(Usuario usuario) {
+//   	 this.invitados.add(usuario);
+//   	 // creamos una invitacion para hace rla asociacion entre usuario y actividad
+//   	 // V 2.0 del tpe / antes se hacia todo en actividad pero se le quito esta responsabilidad
+//   	 usuario.setInvitacion(new Invitacion(this, usuario));
+//   }	
 	
 	public List<Usuario> getInvitados() {
 		return invitados;
@@ -149,13 +149,13 @@ public class Actividad /*implements Serializable*/ {
 	
 	////////////////////////////////////////////////
 	
-	public void recordarInvitacion() {
-		Usuario usuario;
-		for (int i = 0;i< this.invitados.size();i++){
-			 usuario = this.invitados.get(i);
-             usuario.recordarInvitacion(this);
-            }
-        }
+//	public void recordarInvitacion() {
+//		Usuario usuario;
+//		for (int i = 0;i< this.invitados.size();i++){
+//			 usuario = this.invitados.get(i);
+//             usuario.recordarInvitacion(this);
+//            }
+//        }
         
 	/////////// equals
 	 public boolean equals(Object obj) {

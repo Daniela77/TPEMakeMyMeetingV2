@@ -26,8 +26,11 @@ public class Test_Calendario {
 
 	public final HttpClient client = HttpClientBuilder.create().build();
 	String token;
+	
 	@Test
 	public void testUsuarioREST() throws ClientProtocolException, IOException {
+		
+		
 		token = getToken();
 		crearCalendarios();
 		getCalendario();
@@ -56,7 +59,7 @@ public class Test_Calendario {
 
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode jsonObject = mapper.createObjectNode();
-		jsonObject.put("userName", "laggis");
+		jsonObject.put("username", "laggis");
 		jsonObject.put("password", "laggis1");
 		String jsonString = jsonObject.toString();
 
@@ -71,6 +74,7 @@ public class Test_Calendario {
 		return resultContent;
 
 	}
+	
 	public void crearCalendarios() throws ClientProtocolException, IOException {
 
 		String url = BASE_URL + "/calendarios";
@@ -78,7 +82,7 @@ public class Test_Calendario {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode jsonObject = mapper.createObjectNode();
 		jsonObject.put("nombre", "Deportes");
-		jsonObject.put("usuario", 1);
+		jsonObject.put("duenio", 1);
 		String jsonString = jsonObject.toString();
 
 		HttpPost post = new HttpPost(url);
@@ -93,7 +97,7 @@ public class Test_Calendario {
 
 		jsonObject = mapper.createObjectNode();
 		jsonObject.put("nombre", "Reuniones Laborales");
-		jsonObject.put("usuario", 1);
+		jsonObject.put("duenio", 1);
 		jsonString = jsonObject.toString();
 
 		post = new HttpPost(url);
@@ -108,7 +112,7 @@ public class Test_Calendario {
 
 		jsonObject = mapper.createObjectNode();
 		jsonObject.put("nombre", "Showroom");
-		jsonObject.put("usuario", 1);
+		jsonObject.put("duenio", 1);
 		jsonString = jsonObject.toString();
 
 		post = new HttpPost(url);
@@ -125,7 +129,7 @@ public class Test_Calendario {
 
 	public void getCalendario() throws ClientProtocolException, IOException {
 
-		String url = BASE_URL + "/calendarios/1";
+		String url = BASE_URL + "/calendarios/5";
 
 		HttpGet request = new HttpGet(url);
 		request.addHeader("Authorization", "Bearer-"+token+"");

@@ -46,6 +46,7 @@ private static DAOUsuario daousuario;
 		Query query = em.createQuery(jpql); 
 		query.setParameter(1, idUsuario);
 		Usuario usuariotemp = (Usuario) query.getSingleResult();
+		usuariotemp = new Usuario(usuariotemp.getNombre(), usuariotemp.getApellido());
 		em.close();
 		return usuariotemp;
 	}

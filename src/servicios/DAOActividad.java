@@ -1,5 +1,6 @@
 package servicios;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +29,7 @@ public class DAOActividad {
 	}
 
 	public Actividad crearActividad(String nombre,int idCalendario, int usuario ,Date fechaInicio, Date fechafin ,Sala sala ) {
+		System.out.println("crear DaoAct");
 		EntityManager em=EMF.createEntityManager();	
 		em.getTransaction().begin();
 		Actividad na1 = null; 
@@ -36,29 +38,46 @@ public class DAOActividad {
 		Sala s= DAOSala.getInstance().getSala(sala.getId());
 		Calendario c =DAOCalendario.getInstance().getCalendario(idCalendario);
 		na1 = new Actividad(nombre,u,fechaInicio,fechafin,c);
-		na1.setLugar(s);
+//		na1.setLugar(s);
 		em.persist(na1);
 		em.getTransaction().commit();
 		em.close();
+		System.out.println("actividad nueva"+na1.getNombre());
 		return na1;
 	}
-		
+	
+	
+//	public  Calendario crearCalendario(String nombre, Usuario usuario) {
+//		EntityManager em=EMF.createEntityManager();
+//		em.getTransaction().begin();
+//		Calendario nc = new Calendario(nombre, usuario);
+//		em.persist(nc);
+//		em.getTransaction().commit();
+//		em.close();
+////		 System.out.println("calend"+nc);
+//		return nc;
+//	}
+	
 	public List<Actividad> getActividades() {
 		EntityManager em=EMF.createEntityManager();	
-
 		String jpql = "Select a From Actividad a";
 		Query query = em.createQuery(jpql); 
 		List<Actividad> resultados = query.getResultList(); 
+		em.close();
 		return resultados;
 	}
 	
 	public  Actividad getActividad(int idActividad) {
 		EntityManager em=EMF.createEntityManager();
-		String jpql = "Select u From Actividad u where u.id =?1";
+		String jpql = "Select a From Actividad a where a.id =?1";
 		Query query = em.createQuery(jpql); 
+		System.out.println("hola2");
 		query.setParameter(1, idActividad);
+		Actividad actividadtemp = (Actividad) query.getSingleResult();
+		actividadtemp = new Actividad(actividadtemp.getNombre(), actividadtemp.getDuenio(),actividadtemp.getFechaInicio(),actividadtemp.getFechaFin(),actividadtemp.getCalendario());
 		em.close();
-		return (Actividad) query.getSingleResult();
+//		System.out.println(actividadtemp.toString());
+		return actividadtemp;
 	}	
 	
 		
@@ -142,7 +161,7 @@ public class DAOActividad {
 			act.setDuenio(duenio);
 			act.setFechaInicio(fechaInicio);
 			act.setFechaFin(fechafin);
-			act.setLugar(sala1);
+//			act.setLugar(sala1);
 			em.persist(act);
 			em.getTransaction().commit();
 			em.close();

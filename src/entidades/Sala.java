@@ -25,8 +25,8 @@ public class Sala /*implements Serializable */{
 	private String nombre;
 	private String direccion;
 
-	@OneToMany(mappedBy="lugar")
-	private List<Actividad> actividades;
+//	@OneToMany(mappedBy="lugar")
+//	private List<Actividad> actividades;
 	
 	public Sala() {
 		
@@ -35,7 +35,7 @@ public class Sala /*implements Serializable */{
 	public Sala(String nombre, String direccion) {
 		this.nombre = nombre;
 		this.direccion = direccion;
-		this.actividades = new ArrayList<Actividad>();
+//		this.actividades = new ArrayList<Actividad>();
 	}
 
 	public int getId() {
@@ -63,29 +63,31 @@ public class Sala /*implements Serializable */{
 	}
 
 	// actividades
-	public List<Actividad> getActividades() {
-		return actividades;
-	}
+//	public List<Actividad> getActividades() {
+//		return actividades;
+//	}
 	
-	public void setActividad(Actividad actividad) {
-		if (this.hayLugar(actividad)) {
-				this.actividades.add(actividad);
-		}
-	}
+//	public void setActividad(Actividad actividad) {
+//		if (this.hayLugar(actividad)) {
+//				this.actividades.add(actividad);
+//		}
+//	}
 	
-	public boolean hayLugar(Actividad act) {
-		for(int i=0; i<  actividades.size(); i++) {
-			if (this.actividades.get(i).compararSuperPosicion(act)) {
-				return false;
-				}
-		}
-		 return true;
-	}
+//	public boolean hayLugar(Actividad act) {
+//		for(int i=0; i<  actividades.size(); i++) {
+//			if (this.actividades.get(i).compararSuperPosicion(act)) {
+//				return false;
+//				}
+//		}
+//		 return true;
+//	}
 	
 	
 	@Override
 	public String toString() {
-		return "Sala [id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", Actividades=" + actividades
+		return "Sala [id=" + id + ", nombre=" + nombre + ", direccion=" + direccion 
+//				+ ","
+//				+ " Actividades=" + actividades
 				+ "]";
 	}
 	

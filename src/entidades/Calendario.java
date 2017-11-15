@@ -27,8 +27,8 @@ public class Calendario /*implements Serializable */{
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Usuario duenio;
 
-   	@OneToMany(mappedBy="calendario",cascade=CascadeType.PERSIST)
-	private List<Actividad> actividades;
+//   	@OneToMany(mappedBy="calendario",cascade=CascadeType.PERSIST)
+//	private List<Actividad> actividades;
 
 	public Calendario(){
 		
@@ -36,7 +36,7 @@ public class Calendario /*implements Serializable */{
 	
 	public Calendario(String nombre, Usuario duenio) {
 		this.nombre = nombre;
-		this.actividades = new ArrayList<Actividad>();
+//		this.actividades = new ArrayList<Actividad>();
 //		this.usuarioscompartidos = new ArrayList<Usuario>();
 		this.duenio = duenio;
 	}
@@ -60,41 +60,41 @@ public class Calendario /*implements Serializable */{
 	}
 
 	// relacionadas a las actividades
-	public List<Actividad> getActividades() {
-		return actividades;
-	}
+//	public List<Actividad> getActividades() {
+//		return actividades;
+//	}
 	
-	public void setActividades(List<Actividad> actividades) {
-		for (int i = 0;i< actividades.size();i++){
-			this.setActividad(actividades.get(i));
-		}
-	}
+//	public void setActividades(List<Actividad> actividades) {
+//		for (int i = 0;i< actividades.size();i++){
+//			this.setActividad(actividades.get(i));
+//		}
+//	}
 	
-	public void setActividad(Actividad actividad) {
-		//Al agregar una actividad al calendario, a esta misma se le asocia dicho calendario
-		if (this.disponibilidad(actividad)) {
-		this.actividades.add(actividad);
-		actividad.setCalendario(this);
-		}
-	}
+//	public void setActividad(Actividad actividad) {
+//		//Al agregar una actividad al calendario, a esta misma se le asocia dicho calendario
+//		if (this.disponibilidad(actividad)) {
+////		this.actividades.add(actividad);
+//		actividad.setCalendario(this);
+//		}
+//	}
 
 	
-	public boolean disponibilidad(Actividad act) {
-	/// busca en su listado de actividades si hay disponibilidad para agregar una nueva	
-		boolean valor = true;	
-		for (int i = 0;i< this.actividades.size();i++){
-			if (valor == true) {
-				valor = (this.actividades.get(i).compararSuperPosicion(act));
-			}
-			else{
-				return false;
-			}
-		}
-		return true;	
-	}
+//	public boolean disponibilidad(Actividad act) {
+//	/// busca en su listado de actividades si hay disponibilidad para agregar una nueva	
+//		boolean valor = true;	
+//		for (int i = 0;i< this.actividades.size();i++){
+//			if (valor == true) {
+//				valor = (this.actividades.get(i).compararSuperPosicion(act));
+//			}
+//			else{
+//				return false;
+//			}
+//		}
+//		return true;	
+//	}
 
-	public void eliminarActividad(Actividad act) {
-		 this.actividades.remove(act);
-	}
+//	public void eliminarActividad(Actividad act) {
+//		 this.actividades.remove(act);
+//	}
 	
 }

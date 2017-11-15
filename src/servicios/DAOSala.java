@@ -36,10 +36,13 @@ public class DAOSala {
 	public  Sala getSala(int id) {
 		// regresa una sala en base a su ID
 		EntityManager em=EMF.createEntityManager();
-		String jpql = "SELECT s FROM Sala s WHERE s.id = ?"; 
+		String jpql = "SELECT s FROM Sala s WHERE s.id = ?1"; 
 		Query query = em.createQuery(jpql); 
 		query.setParameter(1, id);
-		return (Sala) query.getSingleResult();
+		Sala sala=	(Sala) query.getSingleResult();
+		
+		em.close();
+		return sala;
 		 
 	}
 	

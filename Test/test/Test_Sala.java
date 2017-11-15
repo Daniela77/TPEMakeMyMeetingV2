@@ -1,7 +1,7 @@
 package test;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -9,19 +9,28 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import entidades.Sala;
+
 public class Test_Sala {
 
 	public final String BASE_URL="http://localhost:8080/TPEMakeMyMeeting/api";
 
 	public Client client = Client.create();
 
+	@Test
+	public void test() {
+		testCrearSalas();
+		testGetSala();
+		testGetSalas();
+	}
+	
 	public String getToken(){
 
 		String url = BASE_URL + "/autenticacion/";
 
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode jsonObject = mapper.createObjectNode();
-		jsonObject.put("userName","laggis");
+		jsonObject.put("username","laggis");
 		jsonObject.put("password","laggis1");
 		String jsonString = jsonObject.toString();
 
@@ -36,8 +45,10 @@ public class Test_Sala {
 
 	}
 
-	@Test
+	private int idDeSala;
+	
 	public void testCrearSalas() {
+		String token =getToken();
 
 		String url = BASE_URL + "/salas";
 
@@ -48,11 +59,14 @@ public class Test_Sala {
 		String jsonString = jsonObject.toString();
 
 		WebResource webResource = client.resource(url);
-		ClientResponse response = webResource.type("application/json").post(ClientResponse.class, jsonString);
+		ClientResponse response = webResource.header("Authorization", "Bearer-"+token).type("application/json").post(ClientResponse.class, jsonString);
+		
 
 		System.out.println("\nPOST "+url);
 		System.out.println("Response Code : " + response.getStatus());
-		System.out.println("Response Content : " + response.getEntity(String.class));
+		Sala respuesta = response.getEntity(Sala.class);
+		this.idDeSala=respuesta.getId();
+		System.out.println("Response Content : " + respuesta);
 		Assert.assertEquals(response.getStatus(), 201);
 
 //		jsonObject = mapper.createObjectNode();
@@ -83,11 +97,11 @@ public class Test_Sala {
 
 	}
 
-	@Test(dependsOnMethods= {"testCrearSalas"})
+//	@Test(dependsOnMethods= {"testCrearSalas"})
 	public void testGetSala() {
 
 		String token =getToken();
-		String url = BASE_URL + "/salas/1";
+		String url = BASE_URL + "/salas/"+idDeSala;
 		WebResource webResource = client.resource(url);
 		ClientResponse response = webResource.header("Authorization", "Bearer-"+token).accept("application/json").get(ClientResponse.class);
 
@@ -98,7 +112,7 @@ public class Test_Sala {
 
 	}
 
-	@Test(dependsOnMethods= {"testCrearSalas"})
+//	@Test(dependsOnMethods= {"testCrearSalas"})
 	public void testGetSalas() {
 
 		String token =getToken();
